@@ -1,15 +1,30 @@
-import dcgi;
+// Copyright (c) 2022 Matthew Brennan Jones <matthew.brennan.jones@gmail.com>
+// This file is licensed under the MIT License
+// https://github.com/workhorsy/fastcgi_example
 
-mixin DCGI!my_cgi_function; // Custom function
+import fcgi;
+import std.string : format;
 
-@DisplayExceptions // Show exceptions directly on output
-@MaxRequestBodyLength(1024) // Limit request body to 1kb
-void my_cgi_function(Request request, Output output)
-{
-  output.status = 201; // Default is 200
-  output.addHeader("content-type", "text/plain"); // Default is text/html
-  output("Hello, world");
+bool _is_production = false;
 
-  if ("REQUEST_URI" in request.header)
-    output("Uri:", request.header["REQUEST_URI"]);
+int main() {
+	char[] request;
+	char[] response;
+	while (fcgi_accept(request)) {
+		try {
+			// Read the request header into the buffer
+			response = cast(char[])"Content-Type: text/plain\r\n\r\nit worked!";
+		} catch (Exception err) {
+			response = cast(char[])"Content-Type: text/plain\r\n\r\n";
+			if (!_is_production)
+				response ~= cast(char[])"Error %s %s %s".format(err.msg, err.line, err.file);
+			else
+				response ~= cast(char[])"There was an error";
+		}
+
+		// Send the response
+		fcgi_puts(response);
+	}
+
+	return 0;
 }
