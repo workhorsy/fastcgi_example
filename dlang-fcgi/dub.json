@@ -1,0 +1,12 @@
+{
+	"authors": [
+		"matt"
+	],
+	"copyright": "Copyright © 2022, matt",
+	"dependencies": {
+		"dcgi": "~>0.1.0"
+	},
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "dlang-fcgi"
+}

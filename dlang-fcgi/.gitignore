@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/dlang-fcgi
+dlang-fcgi.so
+dlang-fcgi.dylib
+dlang-fcgi.dll
+dlang-fcgi.a
+dlang-fcgi.lib
+dlang-fcgi-test-*
+*.exe
+*.o
+*.obj
+*.lst
