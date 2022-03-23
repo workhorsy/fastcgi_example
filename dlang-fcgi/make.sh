@@ -52,7 +52,8 @@ run() {
 	set -x
 	gcc -g -c -Wall -Werror source/fcgi.c -o fcgi.o -lfcgi
 	ar rcs clibs.a fcgi.o
-	$DC -unittest -g -w -of app source/app.d source/fcgi.d -L clibs.a -L-lfcgi
+	$DC -g -w -of app.fcgi source/*.d -L clibs.a -L-lfcgi
+	chmod +x app.fcgi
 	set +x
 }
 
